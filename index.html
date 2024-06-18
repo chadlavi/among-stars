@@ -1,191 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alone among the stars</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💫</text></svg>"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alone among the stars</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💫</text></svg>">
-</head>
-
-<body>
-  <style>
-    @media (prefers-color-scheme: dark) {
+  <body>
+    <style>
       :root {
-        color: white;
-        background: #111;
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+        -moz-tab-size: 4;
+        tab-size: 4;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-feature-settings: normal;
+        font-variation-settings: normal;
+        -webkit-tap-highlight-color: transparent;
+
+        --background: white;
+        --black: black;
+        --red: red;
+
+        --link: rgb(39, 39, 144);
+        --text: var(--black);
+        --header-color: #202020;
+
+        --button-background: inhert;
+        --button-background-hover: #f7f7f7;
+        --button-border-color: #f3f4f6;
+        --button-border-color-hover: #d6d6d6;
+        background-color: var(--background);
       }
-      a, a:visited {
-        color: #7070ff;
+      body {
+        box-sizing: border-box;
+        padding: 0.5rem;
+        width: 80ch;
+        max-width: 100%;
+        margin: 0 auto;
+        color: var(--text);
+        background: var(--background);
       }
-    }
-    body {
-      box-sizing: border-box;
-      padding: 8px;
-      width: 80ch;
-      max-width: 100%;
-      margin: 0 auto;
-    }
 
-    .red {
-      color: red;
-    }
-
-    .black {
-      color: inherit;
-    }
-
-    .result {
-      font-weight: bold;
-    }
-
-    .die {
-      font-size: 1.5em;
-    }
-  </style>
-  <script>
-    const dice = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-    const suits = [
-      {
-        suit: "Hearts",
-        color: "red",
-        icon: "&#9829;",
-        thing: "ruins",
-        description: "Examples of ruins include: mysterious obelisks, vine-covered temples, abandoned dwellings for people bigger than you, a wrecked spaceship, etc.",
-      },
-      {
-        suit: "Diamonds",
-        color: "red",
-        icon: "&#9830;",
-        thing: "a living being",
-        description: "Examples of living beings include: people like or unlike you, fish, dinosaurs, wolves, birds, giant insects, etc.",
-      },
-      {
-        suit: "Spades",
-        color: "black",
-        icon: "&#9824;",
-        thing: "a natural phenomenon",
-        description: "Examples of natural phenomena include: huge crystal formations, mirages, vividly colored lightning, strange clouds, rocks eroded in strange shapes, veins of precious metals, etc.",
-      },
-      {
-        suit: "Clubs",
-        color: "black",
-        icon: "&#9827;",
-        thing: "an immobile lifeform",
-        description: "Examples of immobile forms of life include: towering trees, carnivorous pitchers, giant ferns, glowing weeds, floating flowers, oozing mushrooms, etc.",
-      },
-    ];
-    const cards = [
-      {
-        value: "Ace",
-        location: "in a field taller than you",
-      },
-      {
-        value: "2",
-        location: "under the light of the moon(s)",
-      },
-      {
-        value: "3",
-        location: "by a gentle river",
-      },
-      {
-        value: "4",
-        location: "in a steep canyon",
-      },
-      {
-        value: "5",
-        location: "in a treetop",
-      },
-      {
-        value: "6",
-        location: "on the snowy peak of a mountain",
-      },
-      {
-        value: "7",
-        location: "near a volcano",
-      },
-      {
-        value: "8",
-        location: "on a glacier",
-      },
-      {
-        value: "9",
-        location: "deep underground",
-      },
-      {
-        value: "10",
-        location: "on a cliff face",
-      },
-      {
-        value: "Jack",
-        location: "in the desert",
-      },
-      {
-        value: "Queen",
-        location: "in deep water",
-      },
-      {
-        value: "King",
-        location: "floating in the air",
-      },
-    ];
-    const conditions = ["It is arduous to get to.", "You come upon it suddenly.", "You spot it as you are resting."];
-    const dieRoll = (sides = 6) => Math.floor(Math.random() * sides) + 1;
-    const getSuit = () => suits[Math.floor(Math.random() * 4)];
-    const getCard = () => cards[Math.floor(Math.random() * 13)];
-
-    const getScenario = () => {
-      const suit = getSuit();
-      const card = getCard();
-      const roll = dieRoll();
-      const condition = conditions[Math.ceil(roll / 2) - 1];
-
-      return {
-        roll,
-        suit: suit.suit,
-        color: suit.color,
-        icon: suit.icon,
-        thing: suit.thing,
-        description: suit.description,
-        value: card.value,
-        location: card.location,
-        condition,
+      .red {
+        color: var(--red);
       }
-    };
 
-    const play = () => {
-      const scenario = getScenario();
-      const { suit, card, condition, color, icon, thing, description, value, location, roll } = scenario;
-      const colorClass = color === "red" ? "red" : "black";
+      .black {
+        color: var(--black);
+      }
 
-      const innerHTML = `
-        <p>You rolled a <span class="result">${roll}&nbsp;<span class="die">${dice[roll - 1]}</span></span> and drew the <span class="${colorClass} result">${value} of ${suit}&nbsp;${icon}</span>.</p>
+      .result {
+        font-weight: bold;
+      }
+
+      .die {
+        font-size: 1.5em;
+      }
+      h1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin: 0;
+        margin-bottom: 0.5rem;
+        color: var(--header-color);
+      }
+      p {
+        margin: 0;
+        margin-bottom: 0.75rem;
+      }
+      a {
+        color: var(--link);
+      }
+      button {
+        appearance: none;
+        color: inherit;
+        padding: 0.5rem 1rem;
+        background-color: var(--button-background);
+        border: 1px solid var(--button-border-color);
+        border-radius: 0.25rem;
+        margin: 0;
+        margin-top: 1rem;
+        cursor: pointer;
+        font-size: inherit;
+      }
+      button:hover {
+        border-color: var(--button-border-color-hover);
+        background-color: var(--button-background-hover);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: #191919;
+          --black: rgb(215, 215, 215);
+          --red: rgb(253, 96, 96);
+
+          --text: #8c8c8c;
+          --link: rgb(116, 116, 235);
+          --header-color: #818181;
+
+          --button-background: black !important;
+          --button-background-hover: black;
+          --button-border-color: black;
+          --button-border-color-hover: #4d4d4d;
+        }
+      }
+    </style>
+    <script>
+      const dice = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+      const suits = [
+        {
+          suit: "Hearts",
+          color: "red",
+          icon: "&#9829;",
+          thing: "ruins",
+          description:
+            "Examples of ruins include: mysterious obelisks, vine-covered temples, abandoned dwellings for people bigger than you, a wrecked spaceship, etc.",
+        },
+        {
+          suit: "Diamonds",
+          color: "red",
+          icon: "&#9830;",
+          thing: "a living being",
+          description:
+            "Examples of living beings include: people like or unlike you, fish, dinosaurs, wolves, birds, giant insects, etc.",
+        },
+        {
+          suit: "Spades",
+          color: "black",
+          icon: "&#9824;",
+          thing: "a natural phenomenon",
+          description:
+            "Examples of natural phenomena include: huge crystal formations, mirages, vividly colored lightning, strange clouds, rocks eroded in strange shapes, veins of precious metals, etc.",
+        },
+        {
+          suit: "Clubs",
+          color: "black",
+          icon: "&#9827;",
+          thing: "an immobile lifeform",
+          description:
+            "Examples of immobile forms of life include: towering trees, carnivorous pitchers, giant ferns, glowing weeds, floating flowers, oozing mushrooms, etc.",
+        },
+      ];
+      const cards = [
+        {
+          value: "Ace",
+          location: "in a field taller than you",
+        },
+        {
+          value: "2",
+          location: "under the light of the moon(s)",
+        },
+        {
+          value: "3",
+          location: "by a gentle river",
+        },
+        {
+          value: "4",
+          location: "in a steep canyon",
+        },
+        {
+          value: "5",
+          location: "in a treetop",
+        },
+        {
+          value: "6",
+          location: "on the snowy peak of a mountain",
+        },
+        {
+          value: "7",
+          location: "near a volcano",
+        },
+        {
+          value: "8",
+          location: "on a glacier",
+        },
+        {
+          value: "9",
+          location: "deep underground",
+        },
+        {
+          value: "10",
+          location: "on a cliff face",
+        },
+        {
+          value: "Jack",
+          location: "in the desert",
+        },
+        {
+          value: "Queen",
+          location: "in deep water",
+        },
+        {
+          value: "King",
+          location: "floating in the air",
+        },
+      ];
+      const conditions = [
+        "It is arduous to get to.",
+        "You come upon it suddenly.",
+        "You spot it as you are resting.",
+      ];
+      const dieRoll = (sides = 6) => Math.floor(Math.random() * sides) + 1;
+      const getSuit = () => suits[Math.floor(Math.random() * 4)];
+      const getCard = () => cards[Math.floor(Math.random() * 13)];
+
+      const getScenario = () => {
+        const suit = getSuit();
+        const card = getCard();
+        const roll = dieRoll();
+        const condition = conditions[Math.ceil(roll / 2) - 1];
+
+        return {
+          roll,
+          suit: suit.suit,
+          color: suit.color,
+          icon: suit.icon,
+          thing: suit.thing,
+          description: suit.description,
+          value: card.value,
+          location: card.location,
+          condition,
+        };
+      };
+
+      const play = () => {
+        const scenario = getScenario();
+        const {
+          suit,
+          card,
+          condition,
+          color,
+          icon,
+          thing,
+          description,
+          value,
+          location,
+          roll,
+        } = scenario;
+        const colorClass = color === "red" ? "red" : "black";
+
+        const innerHTML = `
+        <p>You rolled a <span class="result">${roll}&nbsp;<span class="die">${
+          dice[roll - 1]
+        }</span></span> and drew the <span class="${colorClass} result">${value} of ${suit}&nbsp;${icon}</span>.</p>
         <p>You see ${thing} ${location}. ${condition}</p>
         <p><i>${description}</i></p>
       `;
-      document.querySelector("#root").innerHTML = innerHTML;
-      document.querySelector("#playbutton").innerHTML = "play again";
-    };
-    window.onload = () => {
-      document.querySelector("#buttoncontainer").innerHTML = `<button id="playbutton" onclick="play();">play</button>`;
-    };
-  </script>
-  <h1>Alone among the stars</h1>
-  <div id="root">
-    <p>
-      In the game <a href="https://noroadhome.itch.io/alone-among-the-stars" target="_blank">Alone Among the
-        Stars</a>, you are a solitary adventurer, hopping from planet to planet exploring. Each world has unique
-      features for you to discover and record. They are represented by cards from a standard deck, placed face down.
-      This is a simple web implementation of the game.
-    </p>
-    <noscript>
+        document.querySelector("#root").innerHTML = innerHTML;
+        document.querySelector("#playbutton").innerHTML = "play again";
+      };
+      window.onload = () => {
+        document.querySelector(
+          "#buttoncontainer"
+        ).innerHTML = `<button id="playbutton" onclick="play();">play</button>`;
+      };
+    </script>
+    <h1>Alone among the stars</h1>
+    <div id="root">
       <p>
-        You need JavaScript to play this game.
+        In the game
+        <a
+          href="https://noroadhome.itch.io/alone-among-the-stars"
+          target="_blank"
+          >Alone Among the Stars</a
+        >, you are a solitary adventurer, hopping from planet to planet
+        exploring. Each world has unique features for you to discover and
+        record. They are represented by cards from a standard deck, placed face
+        down. This is a simple web implementation of the game.
       </p>
-    </noscript>
-  </div>
-  <div id="buttoncontainer"></div>
-</body>
-
+      <noscript>
+        <p>You need JavaScript to play this game.</p>
+      </noscript>
+    </div>
+    <div id="buttoncontainer"></div>
+  </body>
 </html>
